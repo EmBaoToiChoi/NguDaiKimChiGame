@@ -1,197 +1,851 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trung Tâm Điều Hành Cứu Hộ - Rescue Dispatch Center</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;600;700&family=Roboto:wght@300;400;700&display=swap"
+        rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
     <style>
         :root {
-            --primary-color: #e74c3c; /* Màu đỏ cứu hộ */
-            --secondary-color: #f39c12; /* Màu cam cảnh báo */
-            --dark-bg: #1a1a1a;
-            --card-bg: #2d2d2d;
-            --text-light: #ecf0f1;
-            --accent-blue: #3498db;
+            --primary-color: #ff4757;
+            /* Đỏ Neon */
+            --secondary-color: #ffa502;
+            /* Cam Neon */
+            --accent-blue: #1e90ff;
+            /* Xanh Neon */
+            --bg-dark: #0f0f13;
+            --glass-bg: rgba(30, 30, 40, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-glow: 0 0 10px rgba(255, 255, 255, 0.5);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Roboto', sans-serif; background-color: var(--dark-bg); color: var(--text-light); line-height: 1.6; }
-        h1, h2, h3 { font-family: 'Oswald', sans-serif; text-transform: uppercase; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
 
-        /* Navigation */
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--bg-dark);
+            color: #ffffff;
+            line-height: 1.6;
+            overflow-x: hidden;
+            background-image:
+                linear-gradient(rgba(15, 15, 19, 0.9), rgba(15, 15, 19, 0.9)),
+                url('https://www.transparenttextures.com/patterns/dark-matter.png');
+            /* Pattern nhẹ */
+        }
+
+        /* Hiệu ứng Scanline (Màn hình điều khiển) */
+        body::before {
+            content: " ";
+            display: block;
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            z-index: 9999;
+            background-size: 100% 2px, 3px 100%;
+            pointer-events: none;
+        }
+
+        h1,
+        h2,
+        h3 {
+            font-family: 'Chakra Petch', sans-serif;
+            /* Font chiến thuật */
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* --- NAVIGATION --- */
         nav {
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 20px 5%; background: rgba(0,0,0,0.9); position: fixed; width: 100%; z-index: 1000;
-            backdrop-filter: blur(10px); border-bottom: 2px solid var(--primary-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 5%;
+            background: rgba(10, 10, 15, 0.85);
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(255, 71, 87, 0.5);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
         }
-        .logo { font-size: 1.5rem; font-weight: bold; color: var(--primary-color); letter-spacing: 2px; }
-        .nav-links a { color: #fff; text-decoration: none; margin-left: 20px; font-weight: bold; transition: 0.3s; }
-        .nav-links a:hover { color: var(--secondary-color); }
 
-        /* Hero Section */
+        .logo {
+            display: flex;
+            align-items: center;
+            font-family: 'Chakra Petch', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-shadow: 0 0 10px rgba(255, 71, 87, 0.5);
+        }
+
+        .logo img {
+            height: 45px;
+            width: auto;
+            margin-right: 12px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .nav-links a {
+            color: #b2bec3;
+            text-decoration: none;
+            margin-left: 30px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            position: relative;
+            transition: 0.3s;
+            text-transform: uppercase;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: #fff;
+            text-shadow: 0 0 8px var(--accent-blue);
+        }
+
+        /* Hiệu ứng gạch chân hover */
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--primary-color);
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* --- HERO SECTION --- */
         .hero {
+            position: relative;
             height: 100vh;
-            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.7)), url('assets/banner.jpg'); /* Thay ảnh nền ở đây */
-            background-size: cover; background-position: center;
-            display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            overflow: hidden;
+            border-bottom: 3px solid var(--primary-color);
+        }
+
+        .hero-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -2;
+            filter: contrast(1.1) brightness(0.8);
+            /* Làm tối video chút để nổi chữ */
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.8) 100%);
+            z-index: -1;
+        }
+
+        .hero-content {
+            z-index: 1;
             padding: 0 20px;
+            background: rgba(0, 0, 0, 0.6);
+            /* Khung mờ phía sau chữ */
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+            box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
         }
-        .hero h1 { font-size: 4rem; margin-bottom: 10px; text-shadow: 0 0 20px var(--primary-color); }
-        .hero p { font-size: 1.5rem; margin-bottom: 30px; max-width: 800px; }
-        
+
+        .hero h1 {
+            font-size: 4.5rem;
+            line-height: 1.1;
+            margin-bottom: 15px;
+            background: linear-gradient(to right, #ffffff, #dcdcdc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero p {
+            font-size: 1.4rem;
+            color: #dfe6e9;
+            margin-bottom: 35px;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+
+        /* Nút Download Cải tiến */
         .btn-download {
-            background-color: var(--primary-color); color: white; padding: 15px 40px;
-            font-size: 1.5rem; text-decoration: none; border-radius: 50px; font-weight: bold;
-            transition: transform 0.3s, box-shadow 0.3s; display: inline-flex; align-items: center;
-            border: 2px solid white;
+            background: linear-gradient(45deg, #c0392b, #e74c3c);
+            color: white;
+            padding: 18px 50px;
+            font-size: 1.3rem;
+            text-decoration: none;
+            font-family: 'Chakra Petch', sans-serif;
+            font-weight: 700;
+            text-transform: uppercase;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 5px;
+            /* Bo góc ít hơn để nhìn cứng cáp */
+            position: relative;
+            overflow: hidden;
+            transition: 0.3s;
+            box-shadow: 0 0 20px rgba(231, 76, 60, 0.4);
+            display: inline-flex;
+            align-items: center;
         }
+
+        .btn-download i {
+            margin-right: 12px;
+        }
+
+        .btn-download::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+        }
+
         .btn-download:hover {
-            transform: scale(1.05); box-shadow: 0 0 20px var(--primary-color); background-color: #c0392b;
+            transform: translateY(-3px);
+            box-shadow: 0 0 40px rgba(231, 76, 60, 0.7);
         }
-        .btn-download i { margin-right: 10px; }
 
-        /* Sections General */
-        section { padding: 80px 10%; }
-        .section-title { text-align: center; font-size: 2.5rem; margin-bottom: 50px; position: relative; }
+        .btn-download:hover::before {
+            left: 100%;
+        }
+
+        /* --- SECTIONS CHUNG --- */
+        section {
+            padding: 100px 10%;
+            position: relative;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.8rem;
+            margin-bottom: 60px;
+            color: #fff;
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+
         .section-title::after {
-            content: ''; display: block; width: 100px; height: 4px; background: var(--secondary-color); margin: 10px auto;
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: var(--primary-color);
+            margin: 15px auto;
+            box-shadow: 0 0 10px var(--primary-color);
         }
 
-        /* Gameplay Features */
-        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        /* --- FEATURE CARDS (Glassmorphism) --- */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 40px;
+        }
+
         .feature-card {
-            background: var(--card-bg); padding: 30px; border-radius: 10px;
-            border-left: 5px solid var(--primary-color); transition: 0.3s;
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            padding: 40px 30px;
+            border-radius: 15px;
+            border: 1px solid var(--glass-border);
+            transition: 0.4s;
+            position: relative;
+            overflow: hidden;
         }
-        .feature-card:hover { transform: translateY(-10px); background: #333; }
-        .feature-card i { font-size: 2.5rem; color: var(--secondary-color); margin-bottom: 20px; }
-        .feature-card h3 { margin-bottom: 15px; color: white; }
 
-        /* Items System (Economy) */
-        .items-section { background: #222; }
-        .items-container { display: flex; justify-content: space-around; flex-wrap: wrap; gap: 20px; }
+        /* Đường viền trang trí */
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--secondary-color);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+            background: rgba(45, 45, 60, 0.8);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .feature-card i {
+            font-size: 3rem;
+            color: var(--secondary-color);
+            margin-bottom: 25px;
+            filter: drop-shadow(0 0 10px rgba(243, 156, 18, 0.5));
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #fff;
+        }
+
+        .feature-card p {
+            color: #b2bec3;
+            font-size: 1rem;
+        }
+
+        /* --- ITEMS SECTION --- */
+        .items-section {
+            background: linear-gradient(180deg, var(--bg-dark) 0%, #15151e 100%);
+            border-top: 1px solid #333;
+            border-bottom: 1px solid #333;
+        }
+
+        .items-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+
         .item-box {
-            text-align: center; width: 200px; padding: 20px; border: 1px solid #444; border-radius: 10px;
+            background: rgba(35, 35, 45, 0.8);
+            backdrop-filter: blur(5px);
+            width: 320px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            text-align: center;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-        .item-icon { font-size: 3rem; margin-bottom: 10px; }
-        
-        /* Video Gallery */
-        .video-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 20px; }
-        .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 10px; border: 1px solid #555; }
-        .video-container iframe, .video-container video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
 
-        /* Footer */
-        footer { background: black; padding: 40px; text-align: center; border-top: 1px solid #333; }
-        .team-name { color: var(--secondary-color); font-weight: bold; }
+        .item-icon {
+            font-size: 3.5rem;
+            margin-bottom: 15px;
+            display: inline-block;
+        }
+
+        .item-box h3 {
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+
+        .item-box p {
+            font-size: 0.95rem;
+            color: #a4b0be;
+        }
+
+        /* Hover Effects giữ nguyên nhưng làm mịn hơn */
+        .item-box:hover {
+            transform: translateY(-10px) scale(1.02);
+        }
+
+        .item-ice:hover {
+            border-color: #3498db;
+            box-shadow: 0 0 30px rgba(52, 152, 219, 0.3);
+        }
+
+        .item-ice:hover .item-icon {
+            transform: rotate(-15deg) scale(1.1);
+            transition: 0.4s;
+        }
+
+        .item-kimchi:hover {
+            border-color: #e67e22;
+            box-shadow: 0 0 30px rgba(230, 126, 34, 0.3);
+        }
+
+        .item-kimchi:hover .item-icon {
+            transform: rotate(15deg) scale(1.1);
+            transition: 0.4s;
+        }
+
+        .item-chili:hover {
+            border-color: #e74c3c;
+            box-shadow: 0 0 30px rgba(231, 76, 60, 0.4);
+        }
+
+        .item-chili:hover .item-icon {
+            animation: shake 0.5s infinite;
+        }
+
+        @keyframes shake {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            25% {
+                transform: rotate(10deg);
+            }
+
+            75% {
+                transform: rotate(-10deg);
+            }
+
+            100% {
+                transform: rotate(0deg);
+            }
+        }
+
+        /* UPGRADE CARDS */
+        .upgrade-card {
+            background: linear-gradient(145deg, #1e2025, #15161a);
+            border: 1px solid #2f3640;
+        }
+
+        .upgrade-card:hover {
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 25px rgba(30, 144, 255, 0.3);
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 6px 12px;
+            border: 1px solid var(--accent-blue);
+            color: var(--accent-blue);
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-top: 15px;
+            letter-spacing: 1px;
+            background: rgba(30, 144, 255, 0.1);
+        }
+
+        /* --- MEDIA SECTION --- */
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 30px;
+        }
+
+        .video-container {
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid #444;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            transition: 0.3s;
+        }
+
+        .video-container:hover {
+            border-color: var(--secondary-color);
+            transform: scale(1.02);
+        }
+
+        /* AI Video Player - Styled as Monitor */
+        .ai-video-wrapper {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #111;
+            padding: 5px;
+            border-radius: 10px;
+            border: 2px solid #333;
+            box-shadow: 0 0 50px rgba(0, 0, 0, 0.8);
+            position: relative;
+        }
+
+        /* Giả lập khung màn hình */
+        .ai-video-wrapper::after {
+            content: 'REC •';
+            position: absolute;
+            top: 25px;
+            left: 30px;
+            color: red;
+            font-weight: bold;
+            font-family: monospace;
+            animation: blink 1s infinite;
+            pointer-events: none;
+            z-index: 10;
+            text-shadow: 0 0 5px red;
+        }
+
+        @keyframes blink {
+            50% {
+                opacity: 0;
+            }
+        }
+
+        .video-player-box video {
+            width: 100%;
+            aspect-ratio: 16/9;
+            background: #000;
+            border-radius: 5px;
+            border-bottom: 2px solid #333;
+        }
+
+        .player-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #1e1e1e;
+            padding: 15px 30px;
+            border-bottom-left-radius: 5px;
+            border-bottom-right-radius: 5px;
+        }
+
+        .control-btn {
+            width: 45px;
+            height: 45px;
+            background: #333;
+            color: #fff;
+            border: 1px solid #555;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 1.1rem;
+        }
+
+        .control-btn:hover {
+            background: var(--accent-blue);
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 15px var(--accent-blue);
+        }
+
+        .video-info {
+            text-align: center;
+        }
+
+        #videoTitle {
+            display: block;
+            font-family: 'Chakra Petch', sans-serif;
+            font-size: 1.1rem;
+            color: #fff;
+            margin-top: 5px;
+        }
+
+        .playlist-indicator {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            padding-bottom: 15px;
+        }
+
+        .playlist-indicator .bar {
+            width: 40px;
+            height: 3px;
+            background: #333;
+            transition: 0.3s;
+        }
+
+        .playlist-indicator .bar.active {
+            background: var(--accent-blue);
+            box-shadow: 0 0 10px var(--accent-blue);
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            background: #0b0b0f;
+            padding: 60px 20px;
+            text-align: center;
+            border-top: 1px solid #222;
+        }
+
+        .team-name {
+            color: var(--primary-color);
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
 
         /* Responsive */
         @media (max-width: 768px) {
-            .hero h1 { font-size: 2.5rem; }
-            .nav-links { display: none; } 
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .video-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
+
 <body>
 
     <nav>
-        <div class="logo"><i class="fa-solid fa-headset"></i> RDC TEAM</div>
+        <div class="logo">
+            <img src="./Gemini_Generated_Image_4in32t4in32t4in3.png" alt="Logo">
+            NGŨ ĐẠI KIM CHI
+        </div>
         <div class="nav-links">
-            <a href="#about">Giới Thiệu</a>
+            <a href="#about">Nhiệm Vụ</a>
             <a href="#features">Tính Năng</a>
-            <a href="#media">Thư Viện</a>
-            <a href="#download">Tải Game</a>
+            <a href="#items">Kho Trang Bị</a>
+            <a href="#media">Dữ Liệu</a>
+            <a href="#download"
+                style="color: var(--primary-color); border: 1px solid var(--primary-color); padding: 5px 15px; border-radius: 4px;">Tải
+                Game</a>
         </div>
     </nav>
 
     <section class="hero">
-        <h1>Trung Tâm Điều Hành Cứu Hộ</h1>
-        <p>Chiến thuật quản lý thời gian thực • Tích hợp Gemini AI • Đồ họa Low-poly</p>
-        <a href="game.zip" class="btn-download" download>
-            <i class="fa-solid fa-download"></i> TẢI GAME NGAY (PC)
-        </a>
-        <p style="margin-top: 10px; font-size: 0.9rem; color: #bbb;">Phiên bản: Unity 6 URP | Dung lượng: ~200MB</p>
+        <video autoplay muted loop playsinline class="hero-video">
+            <source src="1..mp4" type="video/mp4">
+        </video>
+        <div class="hero-overlay"></div>
+
+        <div class="hero-content" data-aos="zoom-in" data-aos-duration="1000">
+            <h3 style="color: var(--secondary-color); font-size: 1.2rem; margin-bottom: 10px;">HỆ THỐNG ĐÃ KÍCH HOẠT
+            </h3>
+            <h1>TRUNG TÂM ĐIỀU HÀNH <br><span style="color: var(--primary-color);">CỨU HỘ KHẨN CẤP</span></h1>
+            <p>Chiến thuật quản lý thời gian thực • Tích hợp Gemini AI 1.5 Pro</p>
+            <a href="game.zip" class="btn-download" download>
+                <i class="fa-solid fa-download"></i> TẢI GAME (PC)
+            </a>
+            <p style="margin-top: 15px; font-size: 0.8rem; opacity: 0.7;">Phiên bản 1.0 | Unity 6 URP</p>
+        </div>
     </section>
 
     <section id="about">
-        <h2 class="section-title">Nhiệm Vụ Của Bạn</h2>
+        <div class="section-title" data-aos="fade-up">NHIỆM VỤ CỐT LÕI</div>
         <div class="features-grid">
-            <div class="feature-card">
-                <i class="fa-solid fa-clock"></i>
+            <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
+                <i class="fa-solid fa-stopwatch"></i>
                 <h3>Áp Lực Thời Gian</h3>
-                <p>Mỗi ngày là một thử thách. Điều phối xe cứu hỏa, cứu thương và xuồng đến các điểm nóng như "Cháy nhà đường Lê Duẩn" hay "Đắm tàu ven biển" trước khi quá muộn.</p>
+                <p>Mỗi giây đều quý giá. Điều phối xe cứu hỏa, cứu thương đến các điểm nóng như "Cháy nhà phố cổ" hay
+                    "Tai nạn cầu vượt" trước khi thanh sinh mệnh về 0.</p>
             </div>
-            <div class="feature-card">
-                <i class="fa-solid fa-microchip"></i>
-                <h3>Trợ Lý Ảo Gemini AI</h3>
-                <p>AI đóng vai trò Sĩ quan trực ban, phân tích chiến thuật, báo cáo hiệu suất cuối ngày và cung cấp kiến thức sinh tồn thực tế.</p>
+            <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
+                <i class="fa-solid fa-robot"></i>
+                <h3>Sĩ Quan AI Gemini</h3>
+                <p>AI đóng vai trò trợ lý chiến thuật: Phân tích rủi ro, gợi ý ưu tiên cứu hộ và tự động tạo báo cáo
+                    nhiệm vụ sau mỗi ngày làm việc.</p>
             </div>
-            <div class="feature-card">
-                <i class="fa-solid fa-city"></i>
+            <div class="feature-card" data-aos="fade-up" data-aos-delay="300">
+                <i class="fa-solid fa-map-location-dot"></i>
                 <h3>Đa Dạng Địa Hình</h3>
-                <p>3 phân khu riêng biệt: <strong>Đô thị</strong> (Tắc đường, cháy nổ), <strong>Rừng núi</strong> (Hiểm trở) và <strong>Ven biển</strong> (Cứu hộ thủy nạn).</p>
+                <p>3 Phân khu chiến thuật: <strong>Đô thị</strong> (Kẹt xe, cháy nổ), <strong>Rừng núi</strong> (Sạt lở,
+                    địa hình khó) và <strong>Ven biển</strong> (Cứu hộ thủy nạn).</p>
             </div>
         </div>
     </section>
 
     <section id="items" class="items-section">
-        <h2 class="section-title">Hệ Thống Item Độc Đáo</h2>
-        <p style="text-align: center; margin-bottom: 30px;">Sử dụng Vàng tích lũy để mua các vật phẩm hỗ trợ sinh tồn</p>
-        <div class="items-container">
-            <div class="item-box">
-                <div class="item-icon">❄️</div>
+        <div class="section-title" data-aos="fade-up">KHO TIẾP LIỆU & CÔNG NGHỆ</div>
+
+        <h3 style="text-align: center; color: var(--secondary-color); margin-bottom: 30px; letter-spacing: 2px;">
+            <i class="fa-solid fa-box-open"></i> VẬT PHẨM CHIẾN THUẬT (CONSUMABLES)
+        </h3>
+
+        <div class="items-container" style="margin-bottom: 80px;">
+            <div class="item-box item-ice" data-aos="flip-left" data-aos-delay="100">
+                <div class="item-icon" style="color: #3498db;">❄️</div>
                 <h3>Băng Sương</h3>
-                <p>Đóng băng thời gian chờ của toàn bộ sự cố.</p>
+                <p>Đóng băng đồng hồ đếm ngược. "Hack" thời gian để cứu vãn những tình huống ngàn cân treo sợi tóc.</p>
             </div>
-            <div class="item-box">
-                <div class="item-icon">🥬</div>
-                <h3>Kim Chi</h3>
-                <p>Giải quyết ngay lập tức sự cố nguy cấp nhất.</p>
+
+            <div class="item-box item-kimchi" data-aos="flip-left" data-aos-delay="200">
+                <div class="item-icon" style="color: #e67e22;">🥬</div>
+                <h3>Kim Chi Thần Thánh</h3>
+                <p>Giải quyết ngay lập tức 01 sự cố nguy cấp nhất. Món ăn tinh thần tăng 200% sĩ khí.</p>
             </div>
-            <div class="item-box">
-                <div class="item-icon">🌶️</div>
-                <h3>Trái Ớt</h3>
-                <p>Kích hoạt hưng phấn, x2 điểm thưởng (High Risk - High Return).</p>
+
+            <div class="item-box item-chili" data-aos="flip-left" data-aos-delay="300">
+                <div class="item-icon" style="color: #e74c3c;">🌶️</div>
+                <h3>Ớt Chỉ Thiên</h3>
+                <p>Trạng thái "Berserk". Nhân đôi (x2) điểm thưởng nhưng tăng tốc độ xuất hiện sự cố.</p>
+            </div>
+        </div>
+
+        <h3 style="text-align: center; color: var(--accent-blue); margin-bottom: 30px; letter-spacing: 2px;">
+            <i class="fa-solid fa-microchip"></i> CÔNG NGHỆ PHƯƠNG TIỆN (PERMANENT UPGRADES)
+        </h3>
+
+        <div class="items-container">
+            <div class="item-box upgrade-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="item-icon">
+                    <i class="fa-solid fa-gauge-high" style="color: #f1c40f;"></i>
+                </div>
+                <h3>Turbo Engine V8</h3>
+                <p>Trang bị động cơ hiệu suất cao. Cắt đuôi tử thần, lao đến hiện trường với tốc độ tối đa.</p>
+                <span class="badge">Tốc độ di chuyển ++</span>
+            </div>
+
+            <div class="item-box upgrade-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="item-icon">
+                    <i class="fa-solid fa-screwdriver-wrench" style="color: #2ecc71;"></i>
+                </div>
+                <h3>Hydraulic Tools</h3>
+                <p>Nâng cấp bộ dụng cụ cứu hộ thủy lực. Phá cửa, dập lửa, sơ cứu nhanh hơn gấp bội.</p>
+                <span class="badge">Tốc độ xử lý ++</span>
             </div>
         </div>
     </section>
 
     <section id="media">
-        <h2 class="section-title">Thư Viện Hình Ảnh & Video</h2>
-        
-        <h3 style="margin-bottom: 20px; color: var(--secondary-color);">🎥 Gameplay Demo</h3>
-        <div class="video-grid" style="margin-bottom: 50px;">
-            <div class="video-container">
+        <div class="section-title" data-aos="fade-up">DỮ LIỆU NHIỆM VỤ (GALLERY)</div>
+
+        <h3
+            style="margin-bottom: 25px; color: var(--secondary-color); border-left: 4px solid var(--secondary-color); padding-left: 15px;">
+            THỰC TẾ TRÒ CHƠI (GAMEPLAY)
+        </h3>
+        <div class="video-grid" style="margin-bottom: 80px;">
+            <div class="video-container" data-aos="zoom-in">
                 <video controls>
                     <source src="assets/gameplay.mp4" type="video/mp4">
-                    Trình duyệt của bạn không hỗ trợ video.
+                    Trình duyệt không hỗ trợ.
                 </video>
             </div>
-            <div class="video-container">
+            <div class="video-container" data-aos="zoom-in" data-aos-delay="100">
                 <video controls>
                     <source src="assets/gameplay2.mp4" type="video/mp4">
                 </video>
             </div>
         </div>
 
-        <h3 style="margin-bottom: 20px; color: var(--accent-blue);">🤖 AI Generated Content (Gemini)</h3>
-        <div class="video-grid">
-            <div class="video-container"><video controls src="assets/ai_video1.mp4"></video></div>
-            <div class="video-container"><video controls src="assets/ai_video2.mp4"></video></div>
+        <h3
+            style="margin-bottom: 25px; color: var(--accent-blue); border-left: 4px solid var(--accent-blue); padding-left: 15px;">
+            HỒ SƠ PHÂN TÍCH TỪ AI (GEMINI GENERATED)
+        </h3>
+
+        <div class="ai-video-wrapper" data-aos="fade-up">
+            <div class="video-player-box">
+                <video id="aiMainVideo" playsinline>
+                    <source src="" type="video/mp4">
+                </video>
+
+                <div class="player-controls">
+                    <button id="btnPrev" class="control-btn"><i class="fa-solid fa-backward-step"></i></button>
+
+                    <div class="video-info">
+                        <span id="videoTitle">LOADING DATA...</span>
+                        <span id="videoCounter" style="color: var(--secondary-color); font-size: 0.9rem;">1/7</span>
+                    </div>
+
+                    <button id="btnNext" class="control-btn"><i class="fa-solid fa-forward-step"></i></button>
+                </div>
             </div>
+
+            <div class="playlist-indicator">
+                <div class="bar active"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div>
+        </div>
     </section>
 
     <footer id="download">
-        <h2 style="margin-bottom: 20px;">Sẵn Sàng Trở Thành Tổng Chỉ Huy?</h2>
+        <h2 style="margin-bottom: 30px; font-size: 2rem;">SẴN SÀNG NHẬN NHIỆM VỤ?</h2>
+        <p style="color: #aaa; margin-bottom: 30px;">Tải xuống ngay và bắt đầu ca trực của bạn.</p>
+
         <a href="game.zip" class="btn-download" download>
             <i class="fa-solid fa-download"></i> TẢI GAME NGAY
         </a>
-        <div style="margin-top: 40px; border-top: 1px solid #333; padding-top: 20px;">
-            <p>Developed by <span class="team-name">Project Team</span> | Powered by Unity 6 & Gemini API</p>
-            <p style="font-size: 0.8rem; color: #666;">© 2024 Trung Tâm Điều Hành Cứu Hộ.</p>
+
+        <div style="margin-top: 60px; border-top: 1px solid #333; padding-top: 30px;">
+            <p style="font-size: 0.9rem; color: #888;">DEVELOPED BY</p>
+            <h3 class="team-name" style="font-size: 1.5rem; margin: 10px 0;">NGŨ ĐẠI KIM CHI TEAM</h3>
+            <p style="font-size: 0.8rem; color: #666;">FPT Polytechnic | Fall 2024 Project</p>
         </div>
     </footer>
 
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Khởi tạo hiệu ứng cuộn trang (AOS)
+        AOS.init({
+            duration: 1000, // Thời gian chạy hiệu ứng (ms)
+            once: true,     // Chỉ chạy 1 lần khi cuộn xuống
+            offset: 100     // Khoảng cách bắt đầu chạy
+        });
+    </script>
+
+    <script>
+        // CẤU HÌNH DANH SÁCH VIDEO
+        const playlist = [
+            { src: '2..mp4', title: 'Phân tích chiến thuật cứu hỏa' },
+            { src: '3..mp4', title: 'Báo cáo thiệt hại ven biển' },
+            { src: '4..mp4', title: 'Mô phỏng tai nạn giao thông' },
+            { src: '5..mp4', title: 'Hướng dẫn sơ cứu khẩn cấp' },
+            { src: '6..mp4', title: 'Cảnh báo bão cấp 12' },
+            { src: '6.mp4', title: 'Tổng kết nhiệm vụ ngày 7' },
+            { src: '7..mp4', title: 'Giới thiệu tính năng Gemini API' }
+        ];
+
+        let currentIndex = 0;
+        const videoPlayer = document.getElementById('aiMainVideo');
+        const videoTitle = document.getElementById('videoTitle');
+        const videoCounter = document.getElementById('videoCounter');
+        const btnNext = document.getElementById('btnNext');
+        const btnPrev = document.getElementById('btnPrev');
+        const indicators = document.querySelectorAll('.playlist-indicator .bar');
+
+        function loadVideo(index) {
+            videoPlayer.src = playlist[index].src;
+            videoTitle.textContent = playlist[index].title.toUpperCase();
+            videoCounter.textContent = `CAM ${index + 1} / ${playlist.length}`;
+
+            indicators.forEach((bar, i) => {
+                if (i === index) bar.classList.add('active');
+                else bar.classList.remove('active');
+            });
+            videoPlayer.play();
+        }
+
+        btnNext.addEventListener('click', () => {
+            currentIndex++;
+            if (currentIndex >= playlist.length) currentIndex = 0;
+            loadVideo(currentIndex);
+        });
+
+        btnPrev.addEventListener('click', () => {
+            currentIndex--;
+            if (currentIndex < 0) currentIndex = playlist.length - 1;
+            loadVideo(currentIndex);
+        });
+
+        videoPlayer.addEventListener('ended', () => {
+            btnNext.click();
+        });
+
+        // Khởi tạo
+        videoPlayer.src = playlist[0].src;
+        videoTitle.textContent = playlist[0].title.toUpperCase();
+        videoCounter.textContent = `CAM 1 / ${playlist.length}`;
+    </script>
 </body>
+
 </html>
