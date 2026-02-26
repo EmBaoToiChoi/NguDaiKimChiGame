@@ -631,6 +631,27 @@
                 height: 45px;
             }
         }
+        /* Style khung chứa video để nó luôn giữ tỷ lệ 16:9 */
+.video-container {
+    position: relative;
+    padding-bottom: 56.25%; /* Tỷ lệ chuẩn của video YouTube (16:9) */
+    height: 0;
+    overflow: hidden;
+    border-radius: 12px; /* Bo tròn góc */
+    border: 1px solid #444; /* Viền mỏng */
+    background: #000; /* Màu nền đen khi video chưa load */
+    box-shadow: 0 5px 15px rgba(0,0,0,0.5); /* Đổ bóng cho nổi bật */
+}
+
+/* Style cho chính cái iframe bên trong */
+.video-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+}
     </style>
 </head>
 
@@ -740,19 +761,25 @@
     <section id="media">
         <div class="section-title" data-aos="fade-up">DỮ LIỆU NHIỆM VỤ</div>
 
-        <h3 style="color: var(--secondary-color); margin-bottom: 20px;">GAMEPLAY Demo</h3>
-        <div class="video-grid" style="margin-bottom: 60px;">
-            <div class="video-container" data-aos="zoom-in">
-                <video controls>
-                    <source src="assets/gameplay.mp4" type="video/mp4">
-                </video>
-            </div>
-            <div class="video-container" data-aos="zoom-in" data-aos-delay="100">
-                <video controls>
-                    <source src="assets/gameplay2.mp4" type="video/mp4">
-                </video>
-            </div>
-        </div>
+       <h3 style="margin-bottom: 20px; color: var(--secondary-color); text-align: center;">🎥 Gameplay Demo</h3>
+
+<div style="max-width: 900px; margin: 0 auto 50px auto;">
+    
+    <div class="video-container">
+        <iframe 
+            src="https://www.youtube.com/embed/Hz2sPyeV25k?autoplay=1&mute=1" 
+            title="YouTube video player" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+            referrerpolicy="strict-origin-when-cross-origin" 
+            allowfullscreen>
+        </iframe>
+    </div>
+
+    <p style="text-align: center; color: #777; font-size: 0.9rem; margin-top: 10px;">
+        <i class="fa-solid fa-volume-xmark"></i> Video đang tắt tiếng để tự động chạy.
+    </p>
+
+</div>
 
         <h3 style="color: var(--accent-blue); margin-bottom: 20px;">AI GEMINI Video</h3>
         <div class="ai-video-wrapper" data-aos="fade-up">
