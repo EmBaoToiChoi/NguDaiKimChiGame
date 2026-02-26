@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trung Tâm Điều Hành Cứu Hộ - Rescue Dispatch Center</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #e74c3c; /* Màu đỏ cứu hộ */
+            --secondary-color: #f39c12; /* Màu cam cảnh báo */
+            --dark-bg: #1a1a1a;
+            --card-bg: #2d2d2d;
+            --text-light: #ecf0f1;
+            --accent-blue: #3498db;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Roboto', sans-serif; background-color: var(--dark-bg); color: var(--text-light); line-height: 1.6; }
+        h1, h2, h3 { font-family: 'Oswald', sans-serif; text-transform: uppercase; }
+
+        /* Navigation */
+        nav {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 20px 5%; background: rgba(0,0,0,0.9); position: fixed; width: 100%; z-index: 1000;
+            backdrop-filter: blur(10px); border-bottom: 2px solid var(--primary-color);
+        }
+        .logo { font-size: 1.5rem; font-weight: bold; color: var(--primary-color); letter-spacing: 2px; }
+        .nav-links a { color: #fff; text-decoration: none; margin-left: 20px; font-weight: bold; transition: 0.3s; }
+        .nav-links a:hover { color: var(--secondary-color); }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.7)), url('assets/banner.jpg'); /* Thay ảnh nền ở đây */
+            background-size: cover; background-position: center;
+            display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;
+            padding: 0 20px;
+        }
+        .hero h1 { font-size: 4rem; margin-bottom: 10px; text-shadow: 0 0 20px var(--primary-color); }
+        .hero p { font-size: 1.5rem; margin-bottom: 30px; max-width: 800px; }
+        
+        .btn-download {
+            background-color: var(--primary-color); color: white; padding: 15px 40px;
+            font-size: 1.5rem; text-decoration: none; border-radius: 50px; font-weight: bold;
+            transition: transform 0.3s, box-shadow 0.3s; display: inline-flex; align-items: center;
+            border: 2px solid white;
+        }
+        .btn-download:hover {
+            transform: scale(1.05); box-shadow: 0 0 20px var(--primary-color); background-color: #c0392b;
+        }
+        .btn-download i { margin-right: 10px; }
+
+        /* Sections General */
+        section { padding: 80px 10%; }
+        .section-title { text-align: center; font-size: 2.5rem; margin-bottom: 50px; position: relative; }
+        .section-title::after {
+            content: ''; display: block; width: 100px; height: 4px; background: var(--secondary-color); margin: 10px auto;
+        }
+
+        /* Gameplay Features */
+        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .feature-card {
+            background: var(--card-bg); padding: 30px; border-radius: 10px;
+            border-left: 5px solid var(--primary-color); transition: 0.3s;
+        }
+        .feature-card:hover { transform: translateY(-10px); background: #333; }
+        .feature-card i { font-size: 2.5rem; color: var(--secondary-color); margin-bottom: 20px; }
+        .feature-card h3 { margin-bottom: 15px; color: white; }
+
+        /* Items System (Economy) */
+        .items-section { background: #222; }
+        .items-container { display: flex; justify-content: space-around; flex-wrap: wrap; gap: 20px; }
+        .item-box {
+            text-align: center; width: 200px; padding: 20px; border: 1px solid #444; border-radius: 10px;
+        }
+        .item-icon { font-size: 3rem; margin-bottom: 10px; }
+        
+        /* Video Gallery */
+        .video-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 20px; }
+        .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 10px; border: 1px solid #555; }
+        .video-container iframe, .video-container video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+
+        /* Footer */
+        footer { background: black; padding: 40px; text-align: center; border-top: 1px solid #333; }
+        .team-name { color: var(--secondary-color); font-weight: bold; }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            .nav-links { display: none; } 
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo"><i class="fa-solid fa-headset"></i> RDC TEAM</div>
+        <div class="nav-links">
+            <a href="#about">Giới Thiệu</a>
+            <a href="#features">Tính Năng</a>
+            <a href="#media">Thư Viện</a>
+            <a href="#download">Tải Game</a>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <h1>Trung Tâm Điều Hành Cứu Hộ</h1>
+        <p>Chiến thuật quản lý thời gian thực • Tích hợp Gemini AI • Đồ họa Low-poly</p>
+        <a href="game.zip" class="btn-download" download>
+            <i class="fa-solid fa-download"></i> TẢI GAME NGAY (PC)
+        </a>
+        <p style="margin-top: 10px; font-size: 0.9rem; color: #bbb;">Phiên bản: Unity 6 URP | Dung lượng: ~200MB</p>
+    </section>
+
+    <section id="about">
+        <h2 class="section-title">Nhiệm Vụ Của Bạn</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <i class="fa-solid fa-clock"></i>
+                <h3>Áp Lực Thời Gian</h3>
+                <p>Mỗi ngày là một thử thách. Điều phối xe cứu hỏa, cứu thương và xuồng đến các điểm nóng như "Cháy nhà đường Lê Duẩn" hay "Đắm tàu ven biển" trước khi quá muộn.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fa-solid fa-microchip"></i>
+                <h3>Trợ Lý Ảo Gemini AI</h3>
+                <p>AI đóng vai trò Sĩ quan trực ban, phân tích chiến thuật, báo cáo hiệu suất cuối ngày và cung cấp kiến thức sinh tồn thực tế.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fa-solid fa-city"></i>
+                <h3>Đa Dạng Địa Hình</h3>
+                <p>3 phân khu riêng biệt: <strong>Đô thị</strong> (Tắc đường, cháy nổ), <strong>Rừng núi</strong> (Hiểm trở) và <strong>Ven biển</strong> (Cứu hộ thủy nạn).</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="items" class="items-section">
+        <h2 class="section-title">Hệ Thống Item Độc Đáo</h2>
+        <p style="text-align: center; margin-bottom: 30px;">Sử dụng Vàng tích lũy để mua các vật phẩm hỗ trợ sinh tồn</p>
+        <div class="items-container">
+            <div class="item-box">
+                <div class="item-icon">❄️</div>
+                <h3>Băng Sương</h3>
+                <p>Đóng băng thời gian chờ của toàn bộ sự cố.</p>
+            </div>
+            <div class="item-box">
+                <div class="item-icon">🥬</div>
+                <h3>Kim Chi</h3>
+                <p>Giải quyết ngay lập tức sự cố nguy cấp nhất.</p>
+            </div>
+            <div class="item-box">
+                <div class="item-icon">🌶️</div>
+                <h3>Trái Ớt</h3>
+                <p>Kích hoạt hưng phấn, x2 điểm thưởng (High Risk - High Return).</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="media">
+        <h2 class="section-title">Thư Viện Hình Ảnh & Video</h2>
+        
+        <h3 style="margin-bottom: 20px; color: var(--secondary-color);">🎥 Gameplay Demo</h3>
+        <div class="video-grid" style="margin-bottom: 50px;">
+            <div class="video-container">
+                <video controls>
+                    <source src="assets/gameplay.mp4" type="video/mp4">
+                    Trình duyệt của bạn không hỗ trợ video.
+                </video>
+            </div>
+            <div class="video-container">
+                <video controls>
+                    <source src="assets/gameplay2.mp4" type="video/mp4">
+                </video>
+            </div>
+        </div>
+
+        <h3 style="margin-bottom: 20px; color: var(--accent-blue);">🤖 AI Generated Content (Gemini)</h3>
+        <div class="video-grid">
+            <div class="video-container"><video controls src="assets/ai_video1.mp4"></video></div>
+            <div class="video-container"><video controls src="assets/ai_video2.mp4"></video></div>
+            </div>
+    </section>
+
+    <footer id="download">
+        <h2 style="margin-bottom: 20px;">Sẵn Sàng Trở Thành Tổng Chỉ Huy?</h2>
+        <a href="game.zip" class="btn-download" download>
+            <i class="fa-solid fa-download"></i> TẢI GAME NGAY
+        </a>
+        <div style="margin-top: 40px; border-top: 1px solid #333; padding-top: 20px;">
+            <p>Developed by <span class="team-name">Project Team</span> | Powered by Unity 6 & Gemini API</p>
+            <p style="font-size: 0.8rem; color: #666;">© 2024 Trung Tâm Điều Hành Cứu Hộ.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
