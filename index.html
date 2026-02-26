@@ -14,15 +14,15 @@
     <style>
         :root {
             --primary-color: #ff4757;
-            /* Đỏ Neon */
+            /* Đỏ */
             --secondary-color: #ffa502;
-            /* Cam Neon */
+            /* Cam */
             --accent-blue: #1e90ff;
-            /* Xanh Neon */
+            /* Xanh */
             --bg-dark: #0f0f13;
-            --glass-bg: rgba(30, 30, 40, 0.7);
+            --glass-bg: rgba(20, 20, 25, 0.7);
+            /* Nền kính tối hơn chút để dễ đọc chữ */
             --glass-border: rgba(255, 255, 255, 0.1);
-            --text-glow: 0 0 10px rgba(255, 255, 255, 0.5);
         }
 
         * {
@@ -38,67 +38,57 @@
             color: #ffffff;
             line-height: 1.6;
             overflow-x: hidden;
-            background-image:
-                linear-gradient(rgba(15, 15, 19, 0.9), rgba(15, 15, 19, 0.9)),
-                url('https://www.transparenttextures.com/patterns/dark-matter.png');
-            /* Pattern nhẹ */
-        }
-
-        /* Hiệu ứng Scanline (Màn hình điều khiển) */
-        body::before {
-            content: " ";
-            display: block;
-            position: fixed;
-            top: 0;
-            left: 0;
-            bottom: 0;
-            right: 0;
-            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
-            z-index: 9999;
-            background-size: 100% 2px, 3px 100%;
-            pointer-events: none;
+            /* Chặn thanh cuộn ngang thừa */
+            /* Thay thế pattern cũ bằng Gradient tối hiện đại, sạch sẽ */
+            background: radial-gradient(circle at center, #1a1a2e 0%, #0f0f13 100%);
         }
 
         h1,
         h2,
         h3 {
             font-family: 'Chakra Petch', sans-serif;
-            /* Font chiến thuật */
             text-transform: uppercase;
             letter-spacing: 1px;
         }
 
-        /* --- NAVIGATION --- */
+        /* --- NAVIGATION (Đã tối ưu Mobile) --- */
         nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 15px 5%;
-            background: rgba(10, 10, 15, 0.85);
+            background: rgba(10, 10, 15, 0.9);
             position: fixed;
             width: 100%;
+            top: 0;
             z-index: 1000;
             backdrop-filter: blur(15px);
-            border-bottom: 1px solid rgba(255, 71, 87, 0.5);
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .logo {
             display: flex;
             align-items: center;
             font-family: 'Chakra Petch', sans-serif;
-            font-size: 1.4rem;
+            font-size: 1.3rem;
             font-weight: 700;
             color: var(--primary-color);
-            text-shadow: 0 0 10px rgba(255, 71, 87, 0.5);
+            white-space: nowrap;
+            /* Giữ logo 1 dòng */
         }
 
         .logo img {
-            height: 45px;
+            height: 40px;
             width: auto;
-            margin-right: 12px;
-            border-radius: 8px;
+            margin-right: 10px;
+            border-radius: 6px;
             border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* Menu PC */
+        .nav-links {
+            display: flex;
+            align-items: center;
         }
 
         .nav-links a {
@@ -113,39 +103,32 @@
             text-transform: uppercase;
         }
 
-        .nav-links a:hover,
-        .nav-links a.active {
+        .nav-links a:hover {
             color: #fff;
-            text-shadow: 0 0 8px var(--accent-blue);
+            text-shadow: 0 0 10px var(--accent-blue);
         }
 
-        /* Hiệu ứng gạch chân hover */
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: -5px;
-            left: 0;
-            background-color: var(--primary-color);
-            transition: width 0.3s;
-        }
-
-        .nav-links a:hover::after {
-            width: 100%;
+        /* Nút Menu Mobile (Hamburger) */
+        .menu-toggle {
+            display: none;
+            font-size: 1.8rem;
+            color: #fff;
+            cursor: pointer;
         }
 
         /* --- HERO SECTION --- */
         .hero {
             position: relative;
             height: 100vh;
+            width: 100%;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
             overflow: hidden;
-            border-bottom: 3px solid var(--primary-color);
+            padding-top: 60px;
+            /* Tránh bị menu che */
         }
 
         .hero-video {
@@ -156,445 +139,496 @@
             height: 100%;
             object-fit: cover;
             z-index: -2;
-            filter: contrast(1.1) brightness(0.8);
-            /* Làm tối video chút để nổi chữ */
-        }
-
-        .hero-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.8) 100%);
-            z-index: -1;
+            filter: brightness(0.6);
+            /* Làm tối video nền để chữ nổi bật hơn */
         }
 
         .hero-content {
             z-index: 1;
-            padding: 0 20px;
-            background: rgba(0, 0, 0, 0.6);
-            /* Khung mờ phía sau chữ */
-            padding: 40px;
+            padding: 30px;
+            width: 90%;
+            max-width: 800px;
+            background: rgba(0, 0, 0, 0.5);
+            /* Nền mờ nhẹ */
             border-radius: 20px;
             border: 1px solid rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(5px);
+            backdrop-filter: blur(8px);
             box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
+            animation: fadeIn 1.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .hero h1 {
-            font-size: 4.5rem;
-            line-height: 1.1;
+            font-size: 3.5rem;
+            line-height: 1.2;
             margin-bottom: 15px;
-            background: linear-gradient(to right, #ffffff, #dcdcdc);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            color: #fff;
+            text-shadow: 0 0 20px rgba(255, 71, 87, 0.6);
         }
 
         .hero p {
-            font-size: 1.4rem;
+            font-size: 1.2rem;
             color: #dfe6e9;
-            margin-bottom: 35px;
+            margin-bottom: 30px;
             font-weight: 300;
-            letter-spacing: 1px;
         }
 
-        /* Nút Download Cải tiến */
+        /* Button Download Neon */
         .btn-download {
-            background: linear-gradient(45deg, #c0392b, #e74c3c);
-            color: white;
-            padding: 18px 50px;
-            font-size: 1.3rem;
+            background: transparent;
+            color: var(--primary-color);
+            padding: 15px 40px;
+            font-size: 1.2rem;
             text-decoration: none;
             font-family: 'Chakra Petch', sans-serif;
             font-weight: 700;
             text-transform: uppercase;
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            border: 2px solid var(--primary-color);
             border-radius: 5px;
-            /* Bo góc ít hơn để nhìn cứng cáp */
             position: relative;
             overflow: hidden;
-            transition: 0.3s;
-            box-shadow: 0 0 20px rgba(231, 76, 60, 0.4);
+            transition: 0.4s;
             display: inline-flex;
             align-items: center;
+            box-shadow: 0 0 15px rgba(255, 71, 87, 0.2);
         }
 
         .btn-download i {
-            margin-right: 12px;
-        }
-
-        .btn-download::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: 0.5s;
+            margin-right: 10px;
         }
 
         .btn-download:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 0 40px rgba(231, 76, 60, 0.7);
+            background: var(--primary-color);
+            color: #fff;
+            box-shadow: 0 0 30px var(--primary-color);
+            transform: translateY(-5px);
         }
 
-        .btn-download:hover::before {
-            left: 100%;
-        }
-
-        /* --- SECTIONS CHUNG --- */
+        /* --- SECTIONS --- */
         section {
-            padding: 100px 10%;
+            padding: 80px 5%;
             position: relative;
         }
 
         .section-title {
             text-align: center;
-            font-size: 2.8rem;
-            margin-bottom: 60px;
+            font-size: 2.2rem;
+            margin-bottom: 50px;
             color: #fff;
-            text-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
-            position: relative;
-            display: inline-block;
-            width: 100%;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
         }
 
         .section-title::after {
             content: '';
             display: block;
-            width: 80px;
-            height: 4px;
+            width: 60px;
+            height: 3px;
             background: var(--primary-color);
-            margin: 15px auto;
-            box-shadow: 0 0 10px var(--primary-color);
+            margin: 10px auto;
         }
 
-        /* --- FEATURE CARDS (Glassmorphism) --- */
+        /* Grid System (Responsive) */
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 40px;
+            /* Tự động xuống dòng khi nhỏ hơn 300px */
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
         }
 
         .feature-card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(10px);
-            padding: 40px 30px;
-            border-radius: 15px;
+            background: linear-gradient(145deg, rgba(30, 30, 35, 0.8), rgba(20, 20, 25, 0.9));
+            padding: 30px;
+            border-radius: 12px;
             border: 1px solid var(--glass-border);
-            transition: 0.4s;
+            transition: 0.3s;
             position: relative;
             overflow: hidden;
         }
 
-        /* Đường viền trang trí */
-        .feature-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 4px;
-            height: 100%;
-            background: var(--secondary-color);
-        }
-
         .feature-card:hover {
-            transform: translateY(-15px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
-            background: rgba(45, 45, 60, 0.8);
-            border-color: rgba(255, 255, 255, 0.3);
+            border-color: var(--secondary-color);
+            transform: translateY(-5px);
         }
 
         .feature-card i {
-            font-size: 3rem;
+            font-size: 2.5rem;
             color: var(--secondary-color);
-            margin-bottom: 25px;
-            filter: drop-shadow(0 0 10px rgba(243, 156, 18, 0.5));
+            margin-bottom: 20px;
         }
 
-        .feature-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 15px;
-            color: #fff;
-        }
-
-        .feature-card p {
-            color: #b2bec3;
-            font-size: 1rem;
-        }
-
-        /* --- ITEMS SECTION --- */
+        /* Items Section */
         .items-section {
-            background: linear-gradient(180deg, var(--bg-dark) 0%, #15151e 100%);
+            background: #131318;
             border-top: 1px solid #333;
-            border-bottom: 1px solid #333;
         }
 
         .items-container {
             display: flex;
             justify-content: center;
             flex-wrap: wrap;
-            gap: 30px;
+            gap: 25px;
         }
 
         .item-box {
-            background: rgba(35, 35, 45, 0.8);
-            backdrop-filter: blur(5px);
-            width: 320px;
-            padding: 30px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            background: #1e1e24;
+            width: 300px;
+            padding: 25px;
+            border: 1px solid #333;
             border-radius: 12px;
             text-align: center;
-            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: 0.3s;
+            position: relative;
         }
 
-        .item-icon {
-            font-size: 3.5rem;
-            margin-bottom: 15px;
-            display: inline-block;
-        }
-
-        .item-box h3 {
-            font-size: 1.4rem;
-            margin-bottom: 10px;
-            color: #fff;
-        }
-
-        .item-box p {
-            font-size: 0.95rem;
-            color: #a4b0be;
-        }
-
-        /* Hover Effects giữ nguyên nhưng làm mịn hơn */
-        .item-box:hover {
-            transform: translateY(-10px) scale(1.02);
-        }
-
+        /* Hiệu ứng Glow cho Item */
         .item-ice:hover {
             border-color: #3498db;
-            box-shadow: 0 0 30px rgba(52, 152, 219, 0.3);
-        }
-
-        .item-ice:hover .item-icon {
-            transform: rotate(-15deg) scale(1.1);
-            transition: 0.4s;
+            box-shadow: 0 0 20px rgba(52, 152, 219, 0.3);
+            transform: translateY(-10px);
         }
 
         .item-kimchi:hover {
             border-color: #e67e22;
-            box-shadow: 0 0 30px rgba(230, 126, 34, 0.3);
-        }
-
-        .item-kimchi:hover .item-icon {
-            transform: rotate(15deg) scale(1.1);
-            transition: 0.4s;
+            box-shadow: 0 0 20px rgba(230, 126, 34, 0.3);
+            transform: translateY(-10px);
         }
 
         .item-chili:hover {
             border-color: #e74c3c;
-            box-shadow: 0 0 30px rgba(231, 76, 60, 0.4);
+            box-shadow: 0 0 20px rgba(231, 76, 60, 0.4);
+            transform: translateY(-10px);
         }
 
-        .item-chili:hover .item-icon {
-            animation: shake 0.5s infinite;
-        }
-
-        @keyframes shake {
-            0% {
-                transform: rotate(0deg);
-            }
-
-            25% {
-                transform: rotate(10deg);
-            }
-
-            75% {
-                transform: rotate(-10deg);
-            }
-
-            100% {
-                transform: rotate(0deg);
-            }
-        }
-
-        /* UPGRADE CARDS */
-        .upgrade-card {
-            background: linear-gradient(145deg, #1e2025, #15161a);
-            border: 1px solid #2f3640;
-        }
-
-        .upgrade-card:hover {
-            border-color: var(--accent-blue);
-            box-shadow: 0 0 25px rgba(30, 144, 255, 0.3);
-        }
-
-        .badge {
+        .item-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
             display: inline-block;
-            padding: 6px 12px;
-            border: 1px solid var(--accent-blue);
-            color: var(--accent-blue);
-            border-radius: 4px;
-            font-size: 0.75rem;
-            font-weight: bold;
-            text-transform: uppercase;
-            margin-top: 15px;
-            letter-spacing: 1px;
-            background: rgba(30, 144, 255, 0.1);
         }
 
-        /* --- MEDIA SECTION --- */
+        /* Media Section */
         .video-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
         }
 
         .video-container {
             border-radius: 10px;
             overflow: hidden;
             border: 1px solid #444;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
             transition: 0.3s;
         }
 
-        .video-container:hover {
-            border-color: var(--secondary-color);
-            transform: scale(1.02);
+        .video-container video {
+            width: 100%;
+            height: auto;
+            display: block;
         }
 
-        /* AI Video Player - Styled as Monitor */
+        /* AI Player Responsive */
         .ai-video-wrapper {
-            max-width: 900px;
+            max-width: 100%;
             margin: 0 auto;
-            background: #111;
-            padding: 5px;
-            border-radius: 10px;
-            border: 2px solid #333;
-            box-shadow: 0 0 50px rgba(0, 0, 0, 0.8);
-            position: relative;
-        }
-
-        /* Giả lập khung màn hình */
-        .ai-video-wrapper::after {
-            content: 'REC •';
-            position: absolute;
-            top: 25px;
-            left: 30px;
-            color: red;
-            font-weight: bold;
-            font-family: monospace;
-            animation: blink 1s infinite;
-            pointer-events: none;
-            z-index: 10;
-            text-shadow: 0 0 5px red;
-        }
-
-        @keyframes blink {
-            50% {
-                opacity: 0;
-            }
+            background: #000;
+            border: 1px solid #333;
+            border-radius: 8px;
+            overflow: hidden;
         }
 
         .video-player-box video {
             width: 100%;
             aspect-ratio: 16/9;
-            background: #000;
-            border-radius: 5px;
-            border-bottom: 2px solid #333;
+            display: block;
         }
 
         .player-controls {
+            background: #1a1a1a;
+            padding: 10px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: #1e1e1e;
-            padding: 15px 30px;
-            border-bottom-left-radius: 5px;
-            border-bottom-right-radius: 5px;
         }
 
         .control-btn {
-            width: 45px;
-            height: 45px;
+            width: 40px;
+            height: 40px;
+            border-radius: 5px;
             background: #333;
-            color: #fff;
-            border: 1px solid #555;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: 0.2s;
-            font-size: 1.1rem;
-        }
-
-        .control-btn:hover {
-            background: var(--accent-blue);
-            border-color: var(--accent-blue);
-            box-shadow: 0 0 15px var(--accent-blue);
-        }
-
-        .video-info {
-            text-align: center;
+            color: white;
+            border: none;
+            font-size: 1.2rem;
         }
 
         #videoTitle {
-            display: block;
-            font-family: 'Chakra Petch', sans-serif;
-            font-size: 1.1rem;
-            color: #fff;
+            font-size: 0.9rem;
             margin-top: 5px;
+            display: block;
+            color: #ccc;
         }
 
-        .playlist-indicator {
-            margin-top: 20px;
-            display: flex;
-            justify-content: center;
-            gap: 8px;
-            padding-bottom: 15px;
-        }
-
-        .playlist-indicator .bar {
-            width: 40px;
-            height: 3px;
-            background: #333;
-            transition: 0.3s;
-        }
-
-        .playlist-indicator .bar.active {
-            background: var(--accent-blue);
-            box-shadow: 0 0 10px var(--accent-blue);
-        }
-
-        /* --- FOOTER --- */
+        /* Footer */
         footer {
-            background: #0b0b0f;
-            padding: 60px 20px;
+            background: #08080a;
+            padding: 50px 20px;
             text-align: center;
             border-top: 1px solid #222;
         }
 
-        .team-name {
-            color: var(--primary-color);
-            font-weight: bold;
-            font-size: 1.1rem;
-        }
-
-        /* Responsive */
+        /* --- RESPONSIVE MOBILE & TABLET (QUAN TRỌNG) --- */
         @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2.5rem;
+
+            /* Navbar Mobile */
+            .menu-toggle {
+                display: block;
             }
+
+            /* Hiện nút hamburger */
 
             .nav-links {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: rgba(15, 15, 20, 0.98);
+                flex-direction: column;
+                align-items: center;
+                padding: 20px 0;
+                border-bottom: 1px solid var(--primary-color);
                 display: none;
+                /* Ẩn mặc định */
             }
 
-            .video-grid {
-                grid-template-columns: 1fr;
+            .nav-links.active {
+                display: flex;
+                animation: slideDown 0.3s ease;
+            }
+
+            @keyframes slideDown {
+                from {
+                    opacity: 0;
+                    transform: translateY(-10px);
+                }
+
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+            .nav-links a {
+                margin: 15px 0;
+                font-size: 1.1rem;
+            }
+
+            .nav-links a.btn-dl {
+                margin-top: 10px;
+            }
+
+            /* Hero Text Mobile */
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .btn-download {
+                padding: 12px 30px;
+                font-size: 1rem;
+                width: 100%;
+                justify-content: center;
+            }
+
+            /* Section Padding */
+            section {
+                padding: 50px 5%;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            /* Item Box Mobile */
+            .item-box {
+                width: 100%;
+            }
+
+            /* Full width trên mobile */
+
+            /* Logo nhỏ lại chút */
+            .logo {
+                font-size: 1.1rem;
+            }
+
+            .logo img {
+                height: 35px;
+            }
+        }
+
+        /* Màn hình ngang (Landscape Mobile) */
+        @media (max-width: 900px) and (orientation: landscape) {
+            .hero {
+                height: auto;
+                min-height: 100vh;
+                padding: 100px 0;
+            }
+        }
+
+        /* --- HIỆU ỨNG CHO THẺ NÂNG CẤP (UPGRADE CARD) --- */
+
+        .upgrade-card {
+            /* Nền tối màu kim loại */
+            background: linear-gradient(145deg, #1a1a20, #0f0f13);
+            border: 1px solid #333;
+            position: relative;
+            overflow: hidden;
+            /* Quan trọng để làm hiệu ứng quét sáng */
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        /* 1. Hiệu ứng khi Hover: Nổi lên và phát sáng */
+        .upgrade-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            border-color: var(--accent-blue);
+            /* Viền chuyển màu xanh */
+            box-shadow: 0 0 30px rgba(30, 144, 255, 0.3),
+                /* Bóng ngoài */
+                inset 0 0 20px rgba(30, 144, 255, 0.1);
+            /* Bóng trong */
+        }
+
+        /* 2. Hiệu ứng Icon: Xoay vòng và sáng lên */
+        .upgrade-card .item-icon {
+            transition: 0.6s ease;
+        }
+
+        .upgrade-card:hover .item-icon {
+            transform: rotate(360deg) scale(1.2);
+            /* Xoay 1 vòng */
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
+            /* Icon phát sáng trắng */
+            color: #fff !important;
+            /* Đổi màu icon sang trắng */
+        }
+
+        /* 3. Hiệu ứng "Quét sáng" (Shine Effect) cực ngầu */
+        .upgrade-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            /* Ban đầu nằm ẩn bên trái */
+            width: 100%;
+            height: 100%;
+            /* Dải ánh sáng trắng mờ */
+            background: linear-gradient(90deg,
+                    transparent,
+                    rgba(255, 255, 255, 0.1),
+                    rgba(255, 255, 255, 0.2),
+                    rgba(255, 255, 255, 0.1),
+                    transparent);
+            transform: skewX(-25deg);
+            /* Nghiêng luồng sáng */
+            transition: 0.7s;
+        }
+
+        .upgrade-card:hover::before {
+            left: 200%;
+            /* Khi hover, luồng sáng chạy vụt qua bên phải */
+            transition: 0.7s ease-in-out;
+        }
+
+        /* Chỉnh lại cái Badge (Nhãn dán) cho hợp tông */
+        .upgrade-card:hover .badge {
+            background: var(--accent-blue);
+            color: #fff;
+            box-shadow: 0 0 10px var(--accent-blue);
+            transition: 0.3s;
+        }
+
+        /* --- NÚT BACK TO TOP (NEON STYLE) --- */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            /* Màu nền kính mờ tối */
+            background: rgba(20, 20, 25, 0.9);
+            /* Viền đỏ neon */
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+            font-size: 1.2rem;
+            cursor: pointer;
+            z-index: 9999;
+            /* Đảm bảo nằm trên tất cả */
+
+            /* Ẩn mặc định */
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+            /* Hiệu ứng bóng đổ */
+            box-shadow: 0 0 15px rgba(255, 71, 87, 0.3);
+        }
+
+        /* Class này sẽ được JS thêm vào khi cuộn xuống */
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+            /* Hiệu ứng nhịp tim (Pulse) khi hiện lên */
+            animation: pulse-red 2s infinite;
+        }
+
+        /* Hiệu ứng Hover: Đổi màu nền thành đỏ, chữ trắng */
+        .back-to-top:hover {
+            background: var(--primary-color);
+            color: white;
+            box-shadow: 0 0 30px var(--primary-color);
+            /* Sáng rực */
+            transform: translateY(-5px);
+            /* Bay lên chút */
+            animation: none;
+            /* Dừng nhịp tim để tập trung sáng */
+        }
+
+        /* Keyframes cho hiệu ứng nhịp tim */
+        @keyframes pulse-red {
+            0% {
+                box-shadow: 0 0 0 0 rgba(255, 71, 87, 0.7);
+            }
+
+            70% {
+                box-shadow: 0 0 0 15px rgba(255, 71, 87, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(255, 71, 87, 0);
+            }
+        }
+
+        /* Responsive: Trên mobile nút nhỏ hơn chút để đỡ che nội dung */
+        @media (max-width: 768px) {
+            .back-to-top {
+                bottom: 20px;
+                right: 20px;
+                width: 45px;
+                height: 45px;
             }
         }
     </style>
@@ -607,12 +641,16 @@
             <img src="./Gemini_Generated_Image_4in32t4in32t4in3.png" alt="Logo">
             NGŨ ĐẠI KIM CHI
         </div>
-        <div class="nav-links">
-            <a href="#about">Nhiệm Vụ</a>
-            <a href="#features">Tính Năng</a>
-            <a href="#items">Kho Trang Bị</a>
-            <a href="#media">Dữ Liệu</a>
-            <a href="#download"
+
+        <div class="menu-toggle" id="mobile-menu">
+            <i class="fa-solid fa-bars"></i>
+        </div>
+
+        <div class="nav-links" id="nav-list">
+            <a href="#about" onclick="closeMenu()">Nhiệm Vụ</a>
+            <a href="#items" onclick="closeMenu()">Kho Trang Bị</a>
+            <a href="#media" onclick="closeMenu()">Dữ Liệu</a>
+            <a href="#download" onclick="closeMenu()" class="btn-dl"
                 style="color: var(--primary-color); border: 1px solid var(--primary-color); padding: 5px 15px; border-radius: 4px;">Tải
                 Game</a>
         </div>
@@ -622,17 +660,16 @@
         <video autoplay muted loop playsinline class="hero-video">
             <source src="1..mp4" type="video/mp4">
         </video>
-        <div class="hero-overlay"></div>
 
-        <div class="hero-content" data-aos="zoom-in" data-aos-duration="1000">
-            <h3 style="color: var(--secondary-color); font-size: 1.2rem; margin-bottom: 10px;">HỆ THỐNG ĐÃ KÍCH HOẠT
-            </h3>
+        <div class="hero-content" data-aos="zoom-in">
+            <h3 style="color: var(--secondary-color); font-size: 1rem; margin-bottom: 10px; letter-spacing: 2px;">Rescue
+                Pals Simulator</h3>
             <h1>TRUNG TÂM ĐIỀU HÀNH <br><span style="color: var(--primary-color);">CỨU HỘ KHẨN CẤP</span></h1>
-            <p>Chiến thuật quản lý thời gian thực • Tích hợp Gemini AI 1.5 Pro</p>
+            <p>Chiến thuật quản lý thời gian thực</p>
             <a href="game.zip" class="btn-download" download>
-                <i class="fa-solid fa-download"></i> TẢI GAME (PC)
+                <i class="fa-solid fa-download"></i> TẢI GAME NGAY
             </a>
-            <p style="margin-top: 15px; font-size: 0.8rem; opacity: 0.7;">Phiên bản 1.0 | Unity 6 URP</p>
+            <p style="margin-top: 15px; font-size: 0.8rem; opacity: 0.7;">Game Demo | Unity 6</p>
         </div>
     </section>
 
@@ -642,88 +679,70 @@
             <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
                 <i class="fa-solid fa-stopwatch"></i>
                 <h3>Áp Lực Thời Gian</h3>
-                <p>Mỗi giây đều quý giá. Điều phối xe cứu hỏa, cứu thương đến các điểm nóng như "Cháy nhà phố cổ" hay
-                    "Tai nạn cầu vượt" trước khi thanh sinh mệnh về 0.</p>
+                <p>Điều phối xe cứu hỏa, cứu thương đến các điểm nóng như "Cháy nhà phố cổ" trước khi thanh sinh mệnh về
+                    0.</p>
             </div>
             <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
                 <i class="fa-solid fa-robot"></i>
                 <h3>Sĩ Quan AI Gemini</h3>
-                <p>AI đóng vai trò trợ lý chiến thuật: Phân tích rủi ro, gợi ý ưu tiên cứu hộ và tự động tạo báo cáo
-                    nhiệm vụ sau mỗi ngày làm việc.</p>
+                <p>AI đóng vai trò trợ lý chiến thuật: Phân tích rủi ro, gợi ý ưu tiên và tự động tạo báo cáo nhiệm vụ.
+                </p>
             </div>
             <div class="feature-card" data-aos="fade-up" data-aos-delay="300">
                 <i class="fa-solid fa-map-location-dot"></i>
                 <h3>Đa Dạng Địa Hình</h3>
-                <p>3 Phân khu chiến thuật: <strong>Đô thị</strong> (Kẹt xe, cháy nổ), <strong>Rừng núi</strong> (Sạt lở,
-                    địa hình khó) và <strong>Ven biển</strong> (Cứu hộ thủy nạn).</p>
+                <p>3 Phân khu: <strong>Đô thị</strong> (Kẹt xe), <strong>Rừng núi</strong> (Hiểm trở) và <strong>Ven
+                        biển</strong> (Thủy nạn).</p>
             </div>
         </div>
     </section>
 
     <section id="items" class="items-section">
-        <div class="section-title" data-aos="fade-up">KHO TIẾP LIỆU & CÔNG NGHỆ</div>
+        <div class="section-title" data-aos="fade-up">KHO TIẾP LIỆU</div>
 
-        <h3 style="text-align: center; color: var(--secondary-color); margin-bottom: 30px; letter-spacing: 2px;">
-            <i class="fa-solid fa-box-open"></i> VẬT PHẨM CHIẾN THUẬT (CONSUMABLES)
-        </h3>
-
-        <div class="items-container" style="margin-bottom: 80px;">
-            <div class="item-box item-ice" data-aos="flip-left" data-aos-delay="100">
+        <h3 style="text-align: center; color: #bbb; margin-bottom: 30px; font-size: 1rem;">VẬT PHẨM CHIẾN THUẬT</h3>
+        <div class="items-container" style="margin-bottom: 60px;">
+            <div class="item-box item-ice" data-aos="flip-up">
                 <div class="item-icon" style="color: #3498db;">❄️</div>
                 <h3>Băng Sương</h3>
-                <p>Đóng băng đồng hồ đếm ngược. "Hack" thời gian để cứu vãn những tình huống ngàn cân treo sợi tóc.</p>
+                <p>Đóng băng đồng hồ đếm ngược. Câu giờ trong tình huống nguy cấp.</p>
             </div>
-
-            <div class="item-box item-kimchi" data-aos="flip-left" data-aos-delay="200">
+            <div class="item-box item-kimchi" data-aos="flip-up" data-aos-delay="100">
                 <div class="item-icon" style="color: #e67e22;">🥬</div>
                 <h3>Kim Chi Thần Thánh</h3>
-                <p>Giải quyết ngay lập tức 01 sự cố nguy cấp nhất. Món ăn tinh thần tăng 200% sĩ khí.</p>
+                <p>Giải quyết ngay lập tức 01 sự cố. Tăng sĩ khí toàn đội.</p>
             </div>
-
-            <div class="item-box item-chili" data-aos="flip-left" data-aos-delay="300">
+            <div class="item-box item-chili" data-aos="flip-up" data-aos-delay="200">
                 <div class="item-icon" style="color: #e74c3c;">🌶️</div>
                 <h3>Ớt Chỉ Thiên</h3>
-                <p>Trạng thái "Berserk". Nhân đôi (x2) điểm thưởng nhưng tăng tốc độ xuất hiện sự cố.</p>
+                <p>Trạng thái "Berserk". Nhân đôi điểm thưởng (x2 Score).</p>
             </div>
         </div>
 
-        <h3 style="text-align: center; color: var(--accent-blue); margin-bottom: 30px; letter-spacing: 2px;">
-            <i class="fa-solid fa-microchip"></i> CÔNG NGHỆ PHƯƠNG TIỆN (PERMANENT UPGRADES)
-        </h3>
-
+        <h3 style="text-align: center; color: var(--accent-blue); margin-bottom: 30px; font-size: 1rem;">CÔNG NGHỆ NÂNG
+            CẤP</h3>
         <div class="items-container">
-            <div class="item-box upgrade-card" data-aos="fade-up" data-aos-delay="100">
-                <div class="item-icon">
-                    <i class="fa-solid fa-gauge-high" style="color: #f1c40f;"></i>
-                </div>
-                <h3>Turbo Engine V8</h3>
-                <p>Trang bị động cơ hiệu suất cao. Cắt đuôi tử thần, lao đến hiện trường với tốc độ tối đa.</p>
-                <span class="badge">Tốc độ di chuyển ++</span>
+            <div class="item-box upgrade-card" data-aos="fade-up">
+                <div class="item-icon"><i class="fa-solid fa-gauge-high" style="color: #f1c40f;"></i></div>
+                <h3>Nâng Cấp Tốc Độ</h3>
+                <p>Tăng tốc độ di chuyển tối đa cho toàn bộ đội xe.</p>
             </div>
-
-            <div class="item-box upgrade-card" data-aos="fade-up" data-aos-delay="200">
-                <div class="item-icon">
-                    <i class="fa-solid fa-screwdriver-wrench" style="color: #2ecc71;"></i>
-                </div>
-                <h3>Hydraulic Tools</h3>
-                <p>Nâng cấp bộ dụng cụ cứu hộ thủy lực. Phá cửa, dập lửa, sơ cứu nhanh hơn gấp bội.</p>
-                <span class="badge">Tốc độ xử lý ++</span>
+            <div class="item-box upgrade-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="item-icon"><i class="fa-solid fa-screwdriver-wrench" style="color: #2ecc71;"></i></div>
+                <h3>Nâng Cấp Thời Gian Làm Việc</h3>
+                <p>Tăng tốc độ xử lý sự cố (Dập lửa/Cứu người nhanh hơn).</p>
             </div>
         </div>
     </section>
 
     <section id="media">
-        <div class="section-title" data-aos="fade-up">DỮ LIỆU NHIỆM VỤ (GALLERY)</div>
+        <div class="section-title" data-aos="fade-up">DỮ LIỆU NHIỆM VỤ</div>
 
-        <h3
-            style="margin-bottom: 25px; color: var(--secondary-color); border-left: 4px solid var(--secondary-color); padding-left: 15px;">
-            THỰC TẾ TRÒ CHƠI (GAMEPLAY)
-        </h3>
-        <div class="video-grid" style="margin-bottom: 80px;">
+        <h3 style="color: var(--secondary-color); margin-bottom: 20px;">GAMEPLAY Demo</h3>
+        <div class="video-grid" style="margin-bottom: 60px;">
             <div class="video-container" data-aos="zoom-in">
                 <video controls>
                     <source src="assets/gameplay.mp4" type="video/mp4">
-                    Trình duyệt không hỗ trợ.
                 </video>
             </div>
             <div class="video-container" data-aos="zoom-in" data-aos-delay="100">
@@ -733,29 +752,22 @@
             </div>
         </div>
 
-        <h3
-            style="margin-bottom: 25px; color: var(--accent-blue); border-left: 4px solid var(--accent-blue); padding-left: 15px;">
-            HỒ SƠ PHÂN TÍCH TỪ AI (GEMINI GENERATED)
-        </h3>
-
+        <h3 style="color: var(--accent-blue); margin-bottom: 20px;">AI GEMINI Video</h3>
         <div class="ai-video-wrapper" data-aos="fade-up">
             <div class="video-player-box">
-                <video id="aiMainVideo" playsinline>
+                <video id="aiMainVideo" playsinline autoplay muted>
                     <source src="" type="video/mp4">
                 </video>
 
                 <div class="player-controls">
-                    <button id="btnPrev" class="control-btn"><i class="fa-solid fa-backward-step"></i></button>
-
+                    <button id="btnPrev" class="control-btn"><i class="fa-solid fa-backward"></i></button>
                     <div class="video-info">
-                        <span id="videoTitle">LOADING DATA...</span>
-                        <span id="videoCounter" style="color: var(--secondary-color); font-size: 0.9rem;">1/7</span>
+                        <span id="videoTitle">LOADING...</span>
+                        <span id="videoCounter" style="color: var(--secondary-color); font-size: 0.8rem;">1/6</span>
                     </div>
-
-                    <button id="btnNext" class="control-btn"><i class="fa-solid fa-forward-step"></i></button>
+                    <button id="btnNext" class="control-btn"><i class="fa-solid fa-forward"></i></button>
                 </div>
             </div>
-
             <div class="playlist-indicator">
                 <div class="bar active"></div>
                 <div class="bar"></div>
@@ -769,40 +781,52 @@
     </section>
 
     <footer id="download">
-        <h2 style="margin-bottom: 30px; font-size: 2rem;">SẴN SÀNG NHẬN NHIỆM VỤ?</h2>
-        <p style="color: #aaa; margin-bottom: 30px;">Tải xuống ngay và bắt đầu ca trực của bạn.</p>
-
-        <a href="game.zip" class="btn-download" download>
-            <i class="fa-solid fa-download"></i> TẢI GAME NGAY
-        </a>
-
-        <div style="margin-top: 60px; border-top: 1px solid #333; padding-top: 30px;">
-            <p style="font-size: 0.9rem; color: #888;">DEVELOPED BY</p>
-            <h3 class="team-name" style="font-size: 1.5rem; margin: 10px 0;">NGŨ ĐẠI KIM CHI TEAM</h3>
-            <p style="font-size: 0.8rem; color: #666;">FPT Polytechnic | Fall 2024 Project</p>
+        <h2 style="margin-bottom: 20px;">SẴN SÀNG NHẬN NHIỆM VỤ?</h2>
+        <a href="game.zip" class="btn-download" download><i class="fa-solid fa-download"></i> TẢI GAME NGAY</a>
+        <div style="margin-top: 50px; border-top: 1px solid #222; padding-top: 20px;">
+            <p class="team-name">NGŨ ĐẠI KIM CHI TEAM</p>
+            <p style="font-size: 0.8rem; color: #666;">FPT Polytechnic 2026</p>
         </div>
     </footer>
+    <button id="backToTop" class="back-to-top" title="Lên đầu trang">
+        <i class="fa-solid fa-arrow-up"></i>
+    </button>
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        // Khởi tạo hiệu ứng cuộn trang (AOS)
-        AOS.init({
-            duration: 1000, // Thời gian chạy hiệu ứng (ms)
-            once: true,     // Chỉ chạy 1 lần khi cuộn xuống
-            offset: 100     // Khoảng cách bắt đầu chạy
-        });
-    </script>
+        AOS.init({ duration: 800, once: true, offset: 50 });
 
-    <script>
-        // CẤU HÌNH DANH SÁCH VIDEO
+        // --- MOBILE MENU SCRIPT ---
+        const menuToggle = document.getElementById('mobile-menu');
+        const navList = document.getElementById('nav-list');
+        const icon = menuToggle.querySelector('i');
+
+        menuToggle.addEventListener('click', () => {
+            navList.classList.toggle('active');
+            // Đổi icon từ 3 gạch sang dấu X
+            if (navList.classList.contains('active')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-xmark');
+            } else {
+                icon.classList.remove('fa-xmark');
+                icon.classList.add('fa-bars');
+            }
+        });
+
+        function closeMenu() {
+            navList.classList.remove('active');
+            icon.classList.remove('fa-xmark');
+            icon.classList.add('fa-bars');
+        }
+
+        // --- VIDEO PLAYLIST SCRIPT (FIXED) ---
         const playlist = [
             { src: '2..mp4', title: 'Phân tích chiến thuật cứu hỏa' },
-            { src: '3..mp4', title: 'Báo cáo thiệt hại ven biển' },
-            { src: '4..mp4', title: 'Mô phỏng tai nạn giao thông' },
-            { src: '5..mp4', title: 'Hướng dẫn sơ cứu khẩn cấp' },
+            { src: '3..mp4', title: 'Mô phỏng hỏa hoạn' },
+            { src: '4..mp4', title: 'Mô phỏng các phương tiện cứu nạn' },
+            { src: '5..mp4', title: 'Mô phỏng cứu hộ biển' },
             { src: '6..mp4', title: 'Cảnh báo bão cấp 12' },
-            { src: '6.mp4', title: 'Tổng kết nhiệm vụ ngày 7' },
-            { src: '7..mp4', title: 'Giới thiệu tính năng Gemini API' }
+            { src: '7..mp4', title: 'Mô phỏng hỏa hoạn rừng' }
         ];
 
         let currentIndex = 0;
@@ -822,7 +846,10 @@
                 if (i === index) bar.classList.add('active');
                 else bar.classList.remove('active');
             });
-            videoPlayer.play();
+
+            // Bật tiếng khi người dùng tự chuyển bài
+            videoPlayer.muted = false;
+            videoPlayer.play().catch(e => console.log("Auto-play blocked:", e));
         }
 
         btnNext.addEventListener('click', () => {
@@ -838,13 +865,37 @@
         });
 
         videoPlayer.addEventListener('ended', () => {
-            btnNext.click();
+            currentIndex++;
+            if (currentIndex >= playlist.length) currentIndex = 0;
+            loadVideo(currentIndex);
         });
 
-        // Khởi tạo
+        // Init
         videoPlayer.src = playlist[0].src;
         videoTitle.textContent = playlist[0].title.toUpperCase();
-        videoCounter.textContent = `CAM 1 / ${playlist.length}`;
+        // Video đầu tiên bắt buộc mute để autoplay
+        videoPlayer.muted = true;
+        videoPlayer.play().catch(e => console.log("Init play blocked:", e));
+
+        // --- LOGIC BACK TO TOP ---
+        const backToTopBtn = document.getElementById('backToTop');
+
+        window.addEventListener('scroll', () => {
+            // Nếu cuộn xuống hơn 300px thì hiện nút
+            if (window.scrollY > 300) {
+                backToTopBtn.classList.add('show');
+            } else {
+                backToTopBtn.classList.remove('show');
+            }
+        });
+
+        // Sự kiện click
+        backToTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth' // Cuộn mượt mà
+            });
+        });
     </script>
 </body>
 
